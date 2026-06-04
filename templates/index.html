@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuizMind</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+  <!-- INPUT SCREEN -->
+  <div class="screen active" id="screen-input">
+    <div class="brand">QUIZ<span>MIND</span></div>
+    <div class="card">
+      <h2>Create a Quiz</h2>
+      <p class="sub">Choose text or image to generate 5 questions</p>
+      
+      <!-- Tabs for input method -->
+      <div class="input-tabs">
+        <button class="tab-btn active" onclick="switchInputMode('text')">📝 Paste Text</button>
+        <button class="tab-btn" onclick="switchInputMode('image')">📸 Upload Image</button>
+      </div>
+      
+      <!-- Text Input Mode -->
+      <div id="mode-text" class="input-mode active">
+        <textarea id="paragraph" placeholder="Paste any paragraph here... (min 50 words recommended)"></textarea>
+        <button id="btn-generate" onclick="startQuiz()">
+          <span id="btn-text">Generate Quiz ⚡</span>
+          <span id="btn-loader" class="hidden">Generating...</span>
+        </button>
+      </div>
+      
+      <!-- Image Input Mode -->
+      <div id="mode-image" class="input-mode hidden">
+        <div class="image-upload-area" id="upload-area">
+          <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="handleImageSelect(event)">
+          <button class="upload-btn" onclick="document.getElementById('image-input').click()">
+            📷 Choose Image
+          </button>
+          <p class="upload-hint">or drag & drop an image</p>
+          <p class="format-hint">Supported: JPG, PNG, GIF, BMP</p>
+        </div>
+        <button id="btn-upload" class="hidden" onclick="uploadImage()">
+          <span id="upload-text">Generate Quiz ⚡</span>
+          <span id="upload-loader" class="hidden">Processing...</span>
+        </button>
+        <div id="image-preview" class="hidden">
+          <p class="preview-label">Selected:</p>
+          <img id="preview-img" src="" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 8px;">
+        </div>
+      </div>
+      
+      <div id="input-error" class="error-msg hidden"></div>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="screen" id="screen-quiz">
+    <div class="brand">QUIZ<span>MIND</span></div>
+    <div class="card">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="q-meta">
+        <span id="q-type-badge">MCQ</span>
+        <span id="q-counter">Q 1 / 5</span>
+      </div>
+      <h2 id="q-text">Loading question...</h2>
+      <div id="options-wrap"></div>
+      <div id="feedback" class="feedback hidden"></div>
+      <button id="btn-next" class="hidden" onclick="nextQuestion()">Next →</button>
+    </div>
+  </div>
+
+  <!-- SCORE SCREEN -->
+  <div class="screen" id="screen-score">
+    <div class="brand">QUIZ<span>MIND</span></div>
+    <div class="card score-card">
+      <div class="score-circle">
+        <span id="score-num">0</span>
+        <small id="score-total">/5</small>
+      </div>
+      <h2 id="score-label">Great job!</h2>
+      <p id="score-msg"></p>
+      <button onclick="resetApp()">Try New Text 🔄</button>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
